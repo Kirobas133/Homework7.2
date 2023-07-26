@@ -4,38 +4,36 @@
 template <class T>
 class DoubleTable {
 private:
-    T** elemv = nullptr;
-    T* elemg = nullptr;
+    T** elems = nullptr;
     int v = 0;
     int g = 0;
 public:
     DoubleTable(int a, int b)
-        : elemg(new T[b]), elemv(new T*[a]), v(a), g(b){
-    
+        : elems(new T*[a]), v(a), g(b) {
+        for (int i = 0; i < a; i++) {
+            elems[i] = new T[b];
+    }
     }
     ~DoubleTable() {
         for (int i = 0; i < v; i++) {
-            delete[] elemv[i];
+            delete[] elems[i];
         }
-        delete[] elemv;
+        delete[] elems;
     }
-    const int Size() {
+    const int Size() const {
         return v * g;
+    }
+    const T* operator [] (int num1) const{
+        return elems[num1];
+    }
+    T* operator [] (int num2) {
+        return elems[num2];
     }
 };
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    auto test = DoubleTable <int>(2, 3);
+    test[0][0] = 4;
+    std::cout << test[0][0]; // выводит 4
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
